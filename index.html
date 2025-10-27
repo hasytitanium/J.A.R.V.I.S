@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J.A.R.V.I.S</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
+  }
+}
+</script>
+<style>
+  @keyframes pan-grid {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: -30px -30px;
+    }
+  }
+  .animate-grid {
+    animation: pan-grid 3s linear infinite;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fade-in {
+      animation: fade-in 0.3s ease-out forwards;
+  }
+  @keyframes scan-line {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+  }
+  .animate-scan-line-container {
+      overflow: hidden;
+  }
+  .animate-scan-line {
+      animation: scan-line 4s linear infinite;
+      box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff;
+  }
+  @keyframes pulse-glow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.1;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.15;
+    }
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 10s infinite ease-in-out;
+  }
+  @keyframes animate-stars {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-2000px);
+    }
+  }
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .stars div {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: animate-stars linear infinite;
+  }
+</style>
+</head>
+  <body class="bg-black">
+    <div id="stars-container" class="fixed inset-0 z-0 overflow-hidden"></div>
+    <div id="root" class="relative z-10"></div>
+    <script type="module">
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            if (!container) return;
+            container.innerHTML = '';
+            const starCounts = [
+              { count: 700, duration: 50 }, // Slow, distant stars
+              { count: 200, duration: 30 }, // Medium speed stars
+              { count: 100, duration: 10 }  // Fast, nearby stars
+            ];
+            
+            starCounts.forEach((layer, layerIndex) => {
+              const starsDiv = document.createElement('div');
+              starsDiv.className = 'stars';
+              
+              for (let i = 0; i < layer.count; i++) {
+                let star = document.createElement('div');
+                const size = Math.random() * (layerIndex === 2 ? 2 : 1) + 0.5;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 2000 + 'px'; // Start off-screen
+                star.style.animationDuration = (Math.random() * 20 + layer.duration) + 's';
+                star.style.animationDelay = Math.random() * 10 + 's';
+                starsDiv.appendChild(star);
+              }
+              container.appendChild(starsDiv);
+            });
+        }
+        createStars();
+    </script>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

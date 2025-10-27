@@ -1,0 +1,8 @@
+{
+  "name": "J.A.R.V.I.S",
+  "description": "An AI assistant that combines multiple chatbot personalities, supports Hinglish, features live camera integration, and generates images, all presented in a professional, futuristic interface.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
